@@ -15,8 +15,8 @@ const EditTemplate: React.FC = () => {
 
   const formik = useFormik<IOrders>({
     initialValues: {
-      order_date: 0,
-      client_document: 0,
+      order_date: "",
+      client_document: "",
       payment_type: "",
       quantity: 0,
       total_value: 0,
@@ -57,11 +57,12 @@ const EditTemplate: React.FC = () => {
           label="Tipo de Pagamento"
           fullWidth
           value={values.payment_type}
-          onChange={(e) => setFieldValue("flavor", e.target.value)}
+          onChange={(e) => setFieldValue("payment_type", e.target.value)}
           error={!!errors.payment_type}
         >
-          <MenuItem value="a vista">A vista</MenuItem>
-          <MenuItem value="a prazo">A prazo</MenuItem>
+          <MenuItem value="vista">A vista</MenuItem>
+          <MenuItem value="prazo">A prazo</MenuItem>
+          <MenuItem value="pix">No pix</MenuItem>
           <MenuItem value="">Não informado</MenuItem>
         </Select>
 

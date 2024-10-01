@@ -1,18 +1,20 @@
+import { validatorMessage } from "@/constants/validatorMessages";
 import * as Yup from "yup";
 
 export const ProductEditValidator = () => {
+  const { requiredField, numericField, minValue, minLenght, maxLength } =
+    validatorMessage;
   return Yup.object().shape({
     description: Yup.string()
-      .required("Campo Obrigatório")
-      .min(3, "Campo deve ter pelo menos ${min} caracteres")
-      .max(100, "Campo deve ter no máximo ${max} caracteres"),
-    brand: Yup.string()
-      .required("Campo Obrigatório")
-      .max(80, "Campo deve ter no máximo ${max} caracteres"),
+      .required(requiredField)
+      .min(3, minLenght)
+      .max(100, maxLength),
+    brand: Yup.string().required(requiredField).max(80),
     value: Yup.number()
-      .required("Campo Obrigatório")
-      .min(0.01, "Campo deve ter pelo menos o valor min ${min}"),
-    weight: Yup.number().min(0.01, "Campo deve ter o peso min ${min}"),
-    flavor: Yup.string().max(50, "Campo deve ter no máximo ${max} caracteres"),
+      .typeError(numericField)
+      .required(validatorMessage)
+      .min(0.01, minValue),
+    weight: Yup.number().min(0.01, minValue).typeError(numericField),
+    flavor: Yup.string().max(50),
   });
 };

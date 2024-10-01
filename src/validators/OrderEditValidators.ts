@@ -1,16 +1,19 @@
+import { validatorMessage } from "@/constants/validatorMessages";
 import * as Yup from "yup";
 
 export const OrderEditValidator = () => {
+  const { requiredField, numericField, minValue, length } = validatorMessage;
   return Yup.object().shape({
-    order_date: Yup.number().required("Campo Obrigatório"),
-    client_document: Yup.number()
-      .required("Campo Obrigatório")
-      .max(11, "Campo deve ter no máximo ${max} caracteres"),
-    payment_type: Yup.string().required("Campo Obrigatório"),
-    quantity: Yup.number().min(0.01, "Campo deve ter o peso min ${min}"),
-    total_value: Yup.number().max(
-      50,
-      "Campo deve ter no máximo ${max} caracteres"
-    ),
+    order_date: Yup.string().required(requiredField).length(10, length),
+    client_document: Yup.string().required(requiredField).length(11, length),
+    payment_type: Yup.string().required(requiredField),
+    quantity: Yup.number()
+      .typeError(numericField)
+      .required(requiredField)
+      .min(1, minValue),
+    total_value: Yup.number()
+      .typeError(numericField)
+      .required(requiredField)
+      .min(0.01, minValue),
   });
 };

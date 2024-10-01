@@ -33,13 +33,13 @@ const Orders = () => {
   const headCells = [
     {
       id: "order_date",
-      numeric: true,
+      numeric: false,
       disablePadding: false,
       label: "Data do pedido",
     },
     {
       id: "client_document",
-      numeric: true,
+      numeric: false,
       disablePadding: false,
       label: "CPF",
     },
@@ -66,7 +66,7 @@ const Orders = () => {
   return (
     <Layout>
       <Box> Lista de Pedidos </Box>
-      <CustomTable rows={rows} headCells={headCells} />
+      <CustomTable rows={rows} headCells={headCells} editPath="/orders/edit" />
     </Layout>
   );
 };
