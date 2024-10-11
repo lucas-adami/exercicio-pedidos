@@ -4,13 +4,13 @@ import { IOrders } from "@/interfaces/IOrders";
 import { OrderEditValidator } from "@/validators/OrderEditValidators";
 import { Box, Button, MenuItem, Select, TextField } from "@mui/material";
 import { useFormik } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
 
 interface EditTemplateProps {
-  params: { slug: string };
+  order?: IOrders;
 }
 
-const EditTemplate: React.FC = () => {
+const EditTemplate: React.FC<EditTemplateProps> = ({ order }) => {
   //<div>{params.slug}</div>
 
   const formik = useFormik<IOrders>({
@@ -29,7 +29,21 @@ const EditTemplate: React.FC = () => {
     },
   });
 
-  const { handleSubmit, values, handleChange, setFieldValue, errors } = formik;
+  const {
+    handleSubmit,
+    values,
+    handleChange,
+    setFieldValue,
+    errors,
+    setValues,
+  } = formik;
+
+  useEffect(() => {
+    if (!order) return;
+
+    const { id, ...ord } = order;
+    setValues(ord);
+  }, [order, setValues]);
 
   return (
     <Layout>

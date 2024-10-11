@@ -1,4 +1,5 @@
 export interface IProducts {
+  id?: number;
   description: string;
   brand: string;
   value: number;

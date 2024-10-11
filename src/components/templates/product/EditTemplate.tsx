@@ -4,13 +4,13 @@ import { IProducts } from "@/interfaces/IProducts";
 import { ProductEditValidator } from "@/validators/ProductEditValidators";
 import { Box, Button, MenuItem, Select, TextField } from "@mui/material";
 import { useFormik } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
 
 interface EditTemplateProps {
-  params: { slug: string };
+  product?: IProducts;
 }
 
-const EditTemplate: React.FC = () => {
+const EditTemplate: React.FC<EditTemplateProps> = ({ product }) => {
   //<div>{params.slug}</div>
 
   const formik = useFormik<IProducts>({
@@ -29,7 +29,21 @@ const EditTemplate: React.FC = () => {
     },
   });
 
-  const { handleSubmit, values, handleChange, setFieldValue, errors } = formik;
+  const {
+    handleSubmit,
+    values,
+    handleChange,
+    setFieldValue,
+    errors,
+    setValues,
+  } = formik;
+
+  useEffect(() => {
+    if (!product) return;
+
+    const { id, ...prod } = product;
+    setValues(prod);
+  }, [product, setValues]);
 
   return (
     <Layout>
