@@ -157,10 +157,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         </List>
         <Divider />
       </Drawer>
-      <Main open={open}>
-        <DrawerHeader />
-        {children}
-      </Main>
+      <Main open={open}>{children}</Main>
     </Box>
   );
 };

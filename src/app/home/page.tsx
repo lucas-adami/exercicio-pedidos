@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 
 const Home = () => {
   return (
-    <Layout name="layout">
+    <Layout>
       <Box> Bem vindo! </Box>
       <Box> Bem vindo! </Box>
       <Box> Bem vindo! </Box>

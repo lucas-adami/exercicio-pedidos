@@ -12,7 +12,7 @@ export const ProductEditValidator = () => {
     brand: Yup.string().required(requiredField).max(80),
     value: Yup.number()
       .typeError(numericField)
-      .required(validatorMessage)
+      .required(requiredField)
       .min(0.01, minValue),
     weight: Yup.number().min(0.01, minValue).typeError(numericField),
     flavor: Yup.string().max(50),

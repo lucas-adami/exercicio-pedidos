@@ -1,18 +1,20 @@
-"use client";
-import Layout from "@/components/UI/organisms/Layout";
-import { IOrders } from "@/interfaces/IOrders";
-import { OrderEditValidator } from "@/validators/OrderEditValidators";
-import { Box, Button, MenuItem, Select, TextField } from "@mui/material";
-import { useFormik } from "formik";
+"use client"; // Indica que este componente será renderizado no lado do cliente.
+
+// Importação de componentes e dependências.
+import Layout from "@/components/UI/organisms/Layout"; // Componente de layout que estrutura a página.
+import { IOrders } from "@/interfaces/IOrders"; // Interface para definir a estrutura dos dados de um pedido.
+import { OrderEditValidator } from "@/validators/OrderEditValidators"; // Esquema de validação para o formulário.
+import { Box, Button, MenuItem, Select, TextField } from "@mui/material"; // Componentes de UI do Material-UI.
+import { useFormik } from "formik"; // Hook para gerenciar formulários e validações.
 import React, { useEffect } from "react";
 
+// Define as propriedades que o componente espera receber.
 interface EditTemplateProps {
-  order?: IOrders;
+  order?: IOrders; // O pedido a ser editado, opcional.
 }
 
 const EditTemplate: React.FC<EditTemplateProps> = ({ order }) => {
-  //<div>{params.slug}</div>
-
+  // Inicializa o Formik com os valores iniciais, o esquema de validação e a função de submissão.
   const formik = useFormik<IOrders>({
     initialValues: {
       order_date: "",
@@ -22,13 +24,14 @@ const EditTemplate: React.FC<EditTemplateProps> = ({ order }) => {
       total_value: 0,
     },
 
-    validationSchema: OrderEditValidator,
+    validationSchema: OrderEditValidator, // Valida os campos do formulário com o esquema especificado.
 
     onSubmit: (values) => {
-      console.log(values);
+      console.log(values); // Exibe os valores do formulário no console ao submeter.
     },
   });
 
+  // Desestruturações para facilitar o uso dos métodos e propriedades do Formik.
   const {
     handleSubmit,
     values,
@@ -38,13 +41,15 @@ const EditTemplate: React.FC<EditTemplateProps> = ({ order }) => {
     setValues,
   } = formik;
 
+  // useEffect executa a função sempre que 'order' muda.
   useEffect(() => {
-    if (!order) return;
+    if (!order) return; // Se não houver pedido, não faz nada.
 
-    const { id, ...ord } = order;
-    setValues(ord);
-  }, [order, setValues]);
+    const { id, ...ord } = order; // Desestrutura o pedido, excluindo o 'id'.
+    setValues(ord); // Atualiza os valores do formulário com os dados do pedido.
+  }, [order, setValues]); // Dispara o efeito quando 'order' ou 'setValues' mudam.
 
+  // Renderiza o formulário com campos e botões de ação.
   return (
     <Layout>
       <Box component="form" onSubmit={handleSubmit}>
@@ -74,6 +79,7 @@ const EditTemplate: React.FC<EditTemplateProps> = ({ order }) => {
           onChange={(e) => setFieldValue("payment_type", e.target.value)}
           error={!!errors.payment_type}
         >
+          {/* Opções de tipo de pagamento */}
           <MenuItem value="vista">A vista</MenuItem>
           <MenuItem value="prazo">A prazo</MenuItem>
           <MenuItem value="pix">No pix</MenuItem>
@@ -108,4 +114,5 @@ const EditTemplate: React.FC<EditTemplateProps> = ({ order }) => {
     </Layout>
   );
 };
-export default EditTemplate;
+
+export default EditTemplate; // Exporta o componente para uso em outras partes da aplicação.
